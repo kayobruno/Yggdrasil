@@ -22,3 +22,8 @@ Execute o comando abaixo para criar o esquema do banco de dados
 ```bash
 php artisan migrate
 ```
+
+Execute o comando abaixo para criar o "secret key" do JWT
+```bash
+php artisan jwt:secret
+```
