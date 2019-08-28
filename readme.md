@@ -18,9 +18,9 @@ Execute o comando abaixo para criar o arquivo de configuração das variáveis �
 cp .env.example .env
 ```
 
-Execute o comando abaixo para criar o esquema do banco de dados
+Execute o comando abaixo para criar o esquema do banco e inserir dados iniciais
 ```bash
-php artisan migrate
+php artisan migrate --seed
 ```
 
 Execute o comando abaixo para criar o "secret key" do JWT
