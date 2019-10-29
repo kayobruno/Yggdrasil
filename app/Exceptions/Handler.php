@@ -2,11 +2,15 @@
 
 namespace App\Exceptions;
 
+use App\Traits\Rest\ResponseHelpers;
 use Exception;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
+use Illuminate\Http\JsonResponse;
 
 class Handler extends ExceptionHandler
 {
+    use ResponseHelpers;
+
     /**
      * A list of the exception types that are not reported.
      *
@@ -42,10 +46,16 @@ class Handler extends ExceptionHandler
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  \Exception  $exception
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\Response|JsonResponse
      */
     public function render($request, Exception $exception)
     {
+        if ($request->wantsJson() ||
+            (method_exists($exception, 'getStatusCode') && intdiv($exception->getStatusCode(), 100) !== 5)) {
+            $message = $exception->getMessage() !== "" ? $exception->getMessage() : __('messages.error.unavailable');
+            return $this->createApiResponseErrors($message, $exception->getStatusCode());
+        }
+
         return parent::render($request, $exception);
     }
 }
