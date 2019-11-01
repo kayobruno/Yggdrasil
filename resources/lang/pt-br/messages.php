@@ -13,4 +13,8 @@ return [
         'updated' => 'Atualizado com sucesso',
         'removed' => 'Removido com sucesso',
     ],
+
+    'users' => [
+        'cant_delete_yourself' => 'Não é possível remover o usuário logado'
+    ]
 ];
