@@ -1,6 +1,6 @@
-# Zeus
+# Yggdrasil
 
-Estrutura base para API em Laravel
+Estrutura base para API utilizando Laravel
 
 ## Pré-requisitos
 Para execução, é necessário [PHP](http://php.net/) 7.2.0 ou superior e [Composer](https://getcomposer.org/), para instalação das dependências.
