@@ -118,6 +118,7 @@ return [
         'email' => 'e-mail',
         'password' => 'senha',
         'passwordConfirmation' => 'confirmação de senha',
+        'newPassword' => 'nova senha'
     ],
 
 ];

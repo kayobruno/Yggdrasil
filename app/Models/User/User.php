@@ -2,12 +2,14 @@
 
 namespace App\Models\User;
 
+use App\Notifications\Auth\PasswordResetRequest;
+use Illuminate\Contracts\Auth\CanResetPassword;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Tymon\JWTAuth\Contracts\JWTSubject;
 use Zizaco\Entrust\Traits\EntrustUserTrait;
 
-class User extends Authenticatable implements JWTSubject
+class User extends Authenticatable implements JWTSubject, CanResetPassword
 {
     use Notifiable, EntrustUserTrait;
 
@@ -57,5 +59,16 @@ class User extends Authenticatable implements JWTSubject
             'email' => $this->email,
             'roles' => $roles
         ];
+    }
+
+    /**
+     * Send the password reset notification.
+     *
+     * @param  string  $token
+     * @return void
+     */
+    public function sendPasswordResetNotification($token)
+    {
+        $this->notify(new PasswordResetRequest($token));
     }
 }
