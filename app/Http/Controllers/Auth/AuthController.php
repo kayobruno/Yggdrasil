@@ -26,6 +26,27 @@ class AuthController extends Controller
     use SendsPasswordResetEmails;
 
     /**
+     * @OA\Post(path="/login", tags={"Auth"},
+     *     @OA\RequestBody(required=true,
+     *         @OA\MediaType(mediaType="application/json",
+     *             @OA\Schema(type="object",
+     *                 @OA\Property(property="email", type="string"),
+     *                 @OA\Property(property="password", description="Min length 8", type="string"),
+     *             ),
+     *         ),
+     *     ),
+     *     @OA\Response(response="200", description="Success",
+     *         @OA\MediaType(mediaType="application/json",
+     *             @OA\Schema(@OA\Property(property="token", type="string"))
+     *         ),
+     *     ),
+     *     @OA\Response(response="422", description="Unprocessable Entity",
+     *         @OA\MediaType(mediaType="application/json",
+     *             @OA\Schema(@OA\Property(property="errors", type="array", @OA\Items(type="string")))
+     *         ),
+     *     ),
+     * )
+     *
      * @param LoginRequest $request
      * @return JsonResponse
      */
@@ -45,6 +66,19 @@ class AuthController extends Controller
     }
 
     /**
+     * @OA\Get(path="/refresh-token", tags={"Auth"}, security={ {"bearer": {}} },
+     *     @OA\Response(response="200", description="Success",
+     *         @OA\MediaType(mediaType="application/json",
+     *             @OA\Schema(@OA\Property(property="token", type="string"))
+     *         ),
+     *     ),
+     *     @OA\Response(response="422", description="Unprocessable Entity",
+     *         @OA\MediaType(mediaType="application/json",
+     *             @OA\Schema(@OA\Property(property="errors", type="array", @OA\Items(type="string")))
+     *         ),
+     *     ),
+     * )
+     *
      * @return JsonResponse
      */
     public function refreshToken()
@@ -64,6 +98,26 @@ class AuthController extends Controller
     }
 
     /**
+     * @OA\Post(path="/forgot-password", tags={"Auth"},
+     *     @OA\RequestBody(required=true,
+     *         @OA\MediaType(mediaType="application/json",
+     *             @OA\Schema(type="object",
+     *                 @OA\Property(property="email", type="string"),
+     *             ),
+     *         ),
+     *     ),
+     *     @OA\Response(response="200", description="Success",
+     *         @OA\MediaType(mediaType="application/json",
+     *             @OA\Schema(@OA\Property(property="token", type="string"))
+     *         ),
+     *     ),
+     *     @OA\Response(response="422", description="Unprocessable Entity",
+     *         @OA\MediaType(mediaType="application/json",
+     *             @OA\Schema(@OA\Property(property="errors", type="array", @OA\Items(type="string")))
+     *         ),
+     *     ),
+     * )
+     *
      * @param ForgotPasswordRequest $request
      * @return JsonResponse
      * @throws NotFoundException
@@ -86,6 +140,27 @@ class AuthController extends Controller
     }
 
     /**
+     * @OA\Put(path="/reset-password", tags={"Auth"},
+     *     @OA\RequestBody(required=true,
+     *         @OA\MediaType(mediaType="application/json",
+     *             @OA\Schema(type="object",
+     *                 @OA\Property(property="token", type="string"),
+     *                 @OA\Property(property="newPassword", type="string"),
+     *                 @OA\Property(property="passwordConfirmation", type="string"),
+     *             ),
+     *         ),
+     *     ),
+     *     @OA\Response(response="200", description="Success",
+     *         @OA\MediaType(mediaType="application/json",
+     *             @OA\Schema(@OA\Property(property="token", type="string"))
+     *         ),
+     *     ),
+     *     @OA\Response(response="422", description="Unprocessable Entity",
+     *         @OA\MediaType(mediaType="application/json",
+     *             @OA\Schema(@OA\Property(property="errors", type="array", @OA\Items(type="string")))
+     *         ),
+     *     ),
+     * )
      * @param ResetPasswordRequest $request
      * @return JsonResponse
      * @throws ConflictException
