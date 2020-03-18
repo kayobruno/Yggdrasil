@@ -177,6 +177,7 @@ return [
         Barryvdh\Cors\ServiceProvider::class,
         Tymon\JWTAuth\Providers\LaravelServiceProvider::class,
         Zizaco\Entrust\EntrustServiceProvider::class,
+        L5Swagger\L5SwaggerServiceProvider::class,
 
 
     ],

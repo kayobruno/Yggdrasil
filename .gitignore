@@ -556,3 +556,8 @@ healthchecksdb
 MigrationBackup/
 
 # End of https://www.gitignore.io/api/linux,macos,windows,laravel,phpstorm,sublimetext,visualstudio
+
+
+# Swagger
+resources/views/vendor/l5-swagger/
+storage/api-docs/
