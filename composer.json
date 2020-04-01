@@ -12,10 +12,13 @@
         "barryvdh/laravel-cors": "^0.11.3",
         "darkaonline/l5-swagger": "5.8.*",
         "fideloper/proxy": "^4.0",
+        "guzzlehttp/guzzle": "^6.5",
         "laravel/framework": "5.8.*",
         "laravel/tinker": "^1.0",
         "tymon/jwt-auth": "^1.0.0-rc.4.1",
-        "zizaco/entrust": "^1.9"
+        "zizaco/entrust": "^1.9",
+        "ext-json": "*",
+        "ext-pdo": "*"
     },
     "require-dev": {
         "barryvdh/laravel-ide-helper": "^2.6",
