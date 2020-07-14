@@ -9,12 +9,14 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Auth\ForgotPasswordRequest;
 use App\Http\Requests\Auth\LoginRequest;
 use App\Http\Requests\Auth\ResetPasswordRequest;
+use App\Http\Requests\Auth\SocialLoginRequest;
 use App\Models\User\User;
 use Carbon\Carbon;
 use DB;
 use Illuminate\Foundation\Auth\SendsPasswordResetEmails;
 use Illuminate\Http\JsonResponse;
 use JWTAuth;
+use Laravel\Socialite\Facades\Socialite;
 use Log;
 use Password;
 use Symfony\Component\HttpFoundation\Response;
@@ -63,6 +65,54 @@ class AuthController extends Controller
         }
 
         return $this->createApiResponse(['token' => $token]);
+    }
+
+    /**
+     * @OA\Post(path="/login/{provider}", tags={"Auth"},
+     *     @OA\Parameter(description="facebook or google", in="path", name="provider",
+     *         @OA\Schema(type="string")
+     *     ),
+     *     @OA\RequestBody(required=true,
+     *         @OA\MediaType(mediaType="application/json",
+     *             @OA\Schema(type="object",
+     *                 @OA\Property(property="code", type="string"),
+     *             ),
+     *         ),
+     *     ),
+     *     @OA\Response(response="200", description="Success",
+     *         @OA\MediaType(mediaType="application/json",
+     *             @OA\Schema(@OA\Property(property="token", type="string"))
+     *         ),
+     *     ),
+     *     @OA\Response(response="422", description="Unprocessable Entity",
+     *         @OA\MediaType(mediaType="application/json",
+     *             @OA\Schema(@OA\Property(property="errors", type="array", @OA\Items(type="string")))
+     *         ),
+     *     ),
+     * )
+     *
+     * @param SocialLoginRequest $request
+     * @param string $provider
+     * @return JsonResponse
+     */
+    public function socialAuthenticate(SocialLoginRequest $request, string $provider)
+    {
+        if (!in_array($provider, ['facebook', 'google'])) {
+            return $this->badRequest(__('messages.auth.invalid_provider'));
+        }
+
+        $userProvider = Socialite::driver($provider)->userFromToken($request->code);
+        $user = User::where('email', $userProvider->email)->first();
+        if (null === $user) {
+            $user = User::create([
+                'name' => $userProvider->name,
+                'email' => $userProvider->email,
+            ]);
+        }
+
+        $token = JWTAuth::fromUser($user);
+
+        return $this->createApiResponse(compact('token'));
     }
 
     /**

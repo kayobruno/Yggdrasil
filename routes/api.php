@@ -16,6 +16,7 @@ use Illuminate\Http\Request;
 
 Route::group(['prefix' => 'v1' ], function () {
     Route::post('login', 'Auth\AuthController@authenticate');
+    Route::post('login/{provider}', 'Auth\AuthController@socialAuthenticate');
     Route::post('forgot-password', 'Auth\AuthController@forgotPassword');
     Route::get('refresh-token', 'Auth\AuthController@refreshToken');
     Route::put('reset-password', 'Auth\AuthController@resetPassword')->name('password.reset');

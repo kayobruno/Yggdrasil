@@ -27,4 +27,8 @@ return [
             'content' => 'Você está recebendo este e-mail porque recebemos uma solicitação de redefinição de senha para sua conta. Se você não solicitou uma redefinição de senha, nenhuma ação adicional será necessária.',
         ],
     ],
+
+    'auth' => [
+        'invalid_provider' => 'Provedor inválido'
+    ]
 ];

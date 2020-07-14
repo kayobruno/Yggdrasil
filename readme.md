@@ -33,16 +33,17 @@ php artisan jwt:secret
 ## O que podemos encontrar nesta estrutura?
 
 ### Autenticação com JWT
-- Login 
-- Recuperação de senha com envio de e-mail
+- Login
+- Login com Facebook e Google
+- Recuperação de senha
 - Atualização de Token
 
 ### Tipos de usuários e permissões
-- Foi utilizado a biblioteca Entrust (<https://github.com/Zizaco/entrust>) para configurar as rotas de acordo com o tipo de usuário ou permissão.
-Entrust é uma biblioteca excelente e tem muita funcionalidade bacana, então sinta-se à vontade para personalizar ainda mais seus tipos de usuário/permissões.
+- Foi utilizado a biblioteca [Entrust](<https://github.com/Zizaco/entrust>) para criar os tipos de usuário e permissoẽs.
+Esta biblioteca é excelente e tem muita funcionalidade bacana, então sinta-se à vontade para personalizar ainda mais seus tipos de usuário/permissões.
 
 ### Localização
 - Foi criado um Middleware para tratar as traduções em qualquer rota, basta informar o parâmetro `X-localization` no `Header` com o idioma que deseja utilizar.
 
 ### Documentação com Swagger
-- Todas as rotas de usuário foram documentadas utilizando `annotations` do Swagger. Acredito que isso deve servir de base para documentar suas rotas.
+- Todas as rotas de usuário foram documentadas utilizando `annotations` do Swagger. Então isso deve servir de base para documentar suas rotas.
